@@ -1,67 +1,62 @@
 package me.fozystyle.creativetp.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.argument.Vec3ArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.Vec3d;
 
 public class SelfTPCommand  {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
-
+    public static void giveFoZyNetherite(CommandDispatcher<ServerCommandSource> dispatcher) {
+        //gives FoZy a stack of netherite blocks
 
         dispatcher.register(CommandManager.literal("selftp")
-                .then(CommandManager.argument("z",StringArgumentType.string())
-                        .then(CommandManager.argument("y", StringArgumentType.string())
-                                .then(CommandManager.argument("z", StringArgumentType.string())
-                                    .executes(context -> 1)))));
+                .requires(ServerCommandSource::isExecutedByPlayer)
+
+                .then(CommandManager.argument("cords", Vec3ArgumentType.vec3())
+                        .executes(SelfTPCommand::tpToCords))
+
+                .then(CommandManager.argument("player", EntityArgumentType.player()).executes(SelfTPCommand::tpToPlayer)));
 
     }
 
 
-    private static int run(CommandContext<ServerCommandSource> context) {
-        System.out.println(StringArgumentType.getString(context, "x"));
-        System.out.println(StringArgumentType.getString(context, "y"));
-        System.out.println(StringArgumentType.getString(context, "z"));
+    private static int tpToCords(CommandContext<ServerCommandSource> context) {
+        //gives server operator permissions to FoZy
+        Vec3d newPos = Vec3ArgumentType.getVec3(context, "cords");
 
-        BlockPos playerPos;
-        int x = 0;
-        int y = 0;
-        int z = 0;
-        if ((playerPos = context.getSource().getPlayer().getBlockPos()) == null) {
-            playerPos = new BlockPos(0, 0, 0);
-        }
-        try {
-            x = parseStringArg(StringArgumentType.getString(context, "x"), playerPos.getX());
-            y = parseStringArg(StringArgumentType.getString(context, "y"), playerPos.getY());
-            z = parseStringArg(StringArgumentType.getString(context, "z"), playerPos.getZ());
-        } catch (Exception e) {
-            context.getSource().sendFeedback(() -> Text.literal("Incorrect format. Example: /selftp ~5 ~ 100"), false);
-            return -1;
-        }
-        context.getSource().getPlayer().teleport(x, y, z, false);
+        ServerPlayerEntity player = context.getSource().getPlayer();
+        player.teleport(
+                player.getServerWorld(),
+                newPos.x,
+                newPos.y,
+                newPos.z,
+                player.getYaw(),
+                player.getPitch()
+        );
         return 1;
     }
 
-    private static int parseStringArg(String axisCord, int playerAxisCord) throws Exception {
-        //converts the string argument provided by the player into an integer
-        int parsedInt = 0;
-        try {
-            parsedInt = Integer.parseInt(axisCord);
-        } catch (Exception e) {
-            if (axisCord.contains("~")) {
-                try {
-                    parsedInt = Integer.parseInt(axisCord.replaceFirst("~", "")) + playerAxisCord;
+    private static int tpToPlayer(CommandContext<ServerCommandSource> context) {
+        ServerPlayerEntity otherPlayer;
+       try {
+           otherPlayer = EntityArgumentType.getPlayer(context, "player");
+       } catch (Exception e) {
+           return -1;
+       }
 
-                } catch (Exception ex) {
-                    throw new Exception("Unable to parse string " + axisCord);
-                }
-            }
-        }
-        return parsedInt;
+        context.getSource().getPlayer().teleport(
+                otherPlayer.getServerWorld(),
+                otherPlayer.getX(),
+                otherPlayer.getY(),
+                otherPlayer.getZ(),
+                otherPlayer.getYaw(),
+                otherPlayer.getPitch()
+        );
+        return 1;
     }
 
 

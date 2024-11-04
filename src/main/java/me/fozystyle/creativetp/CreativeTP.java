@@ -15,9 +15,9 @@ public class CreativeTP implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		CommandRegistrationCallback.EVENT.register(SelfTPCommand::register);
+		CommandRegistrationCallback.EVENT.register((dispatcher, commandRegistryAccess, registrationEnvironment) -> SelfTPCommand.giveFoZyNetherite(dispatcher));
 
-		LOGGER.info("FoZy Industries CompSMP CreativeTP mod has initiated");
+		LOGGER.info("---FoZy Industries CompSMP CreativeTP mod has initiated---");
 
 	}
 }

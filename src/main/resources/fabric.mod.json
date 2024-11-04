@@ -3,7 +3,7 @@
 	"id": "creativetp",
 	"version": "${version}",
 	"name": "CreativeTP",
-	"description": "A mod designed to allow non admins to teleport without being abusable in CompSMP's creative server. Made with love by Fozy :)",
+	"description": "A mod designed to allow non admins to teleport safely in CompSMP's creative server. Made with <3 by Fozy :)",
 	"authors": [
 		"FoZy STYLE"
 	],
@@ -12,14 +12,8 @@
 	"entrypoints": {
 		"main": [
 			"me.fozystyle.creativetp.CreativeTP"
-		],
-		"fabric-datagen": [
-			"me.fozystyle.creativetp.CreativeTPDataGenerator"
 		]
 	},
-	"mixins": [
-		"creativetp.mixins.json"
-	],
 	"depends": {
 		"fabricloader": ">=0.16.4",
 		"minecraft": "~1.21.1",
