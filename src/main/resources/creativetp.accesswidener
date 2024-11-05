@@ -1,6 +1,0 @@
-accessWidener v2 named
-
-
-accessible method net/minecraft/server/command/TeleportCommand execute (Lnet/minecraft/server/command/ServerCommandSource;Ljava/util/Collection;Lnet/minecraft/entity/Entity;)I
-accessible method net/minecraft/server/command/TeleportCommand execute (Lnet/minecraft/server/command/ServerCommandSource;Ljava/util/Collection;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/command/argument/PosArgument;Lnet/minecraft/command/argument/PosArgument;Lnet/minecraft/server/command/TeleportCommand$LookTarget;)I
-accessible class net/minecraft/server/command/TeleportCommand$LookTarget
