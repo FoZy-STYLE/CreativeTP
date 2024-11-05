@@ -14,9 +14,6 @@
 			"me.fozystyle.creativetp.CreativeTP"
 		]
 	},
-	"mixins": [
-		"creativetp.mixins.json"
-	],
 	"depends": {
 		"fabricloader": ">=0.16.4",
 		"minecraft": "~1.21.1",
@@ -25,6 +22,5 @@
 	},
 	"suggests": {
 		"another-mod": "*"
-	},
-	"accessWidener" :  "creativetp.accesswidener"
+	}
 }

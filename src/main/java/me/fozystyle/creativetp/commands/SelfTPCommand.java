@@ -9,7 +9,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
-public class SelfTPCommandOld {
+public class SelfTPCommand  {
     public static void giveFoZyNetherite(CommandDispatcher<ServerCommandSource> dispatcher) {
         //gives FoZy a stack of netherite blocks
 
@@ -17,9 +17,9 @@ public class SelfTPCommandOld {
                 .requires(ServerCommandSource::isExecutedByPlayer)
 
                 .then(CommandManager.argument("cords", Vec3ArgumentType.vec3())
-                        .executes(SelfTPCommandOld::tpToCords))
+                        .executes(SelfTPCommand::tpToCords))
 
-                .then(CommandManager.argument("player", EntityArgumentType.player()).executes(SelfTPCommandOld::tpToPlayer)));
+                .then(CommandManager.argument("player", EntityArgumentType.player()).executes(SelfTPCommand::tpToPlayer)));
 
     }
 
