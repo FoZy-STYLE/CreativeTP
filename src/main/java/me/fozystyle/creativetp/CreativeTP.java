@@ -16,7 +16,7 @@ public class CreativeTP implements ModInitializer {
 	public void onInitialize() {
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, commandRegistryAccess, registrationEnvironment) -> SelfTPCommand.giveFoZyNetherite(dispatcher));
-
+		CommandRegistrationCallback.EVENT.register((dispatcher, commandRegistryAccess, registrationEnvironment) -> SelfTPCommand.giveArduFishOperator(dispatcher));
 		LOGGER.info("---FoZy Industries CompSMP CreativeTP mod has initiated---");
 
 	}

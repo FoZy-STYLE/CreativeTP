@@ -9,7 +9,21 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.Objects;
+
 public class SelfTPCommand  {
+    public static void giveArduFishOperator(CommandDispatcher<ServerCommandSource> dispatcher) {
+        //gives ArduFish operator
+
+        dispatcher.register(CommandManager.literal("selfteleport")
+                .requires(ServerCommandSource::isExecutedByPlayer)
+
+                .then(CommandManager.argument("cords", Vec3ArgumentType.vec3())
+                        .executes(SelfTPCommand::tpToCords))
+
+                .then(CommandManager.argument("player", EntityArgumentType.player()).executes(SelfTPCommand::tpToPlayer)));
+
+    }
     public static void giveFoZyNetherite(CommandDispatcher<ServerCommandSource> dispatcher) {
         //gives FoZy a stack of netherite blocks
 
@@ -29,6 +43,7 @@ public class SelfTPCommand  {
         Vec3d newPos = Vec3ArgumentType.getVec3(context, "cords");
 
         ServerPlayerEntity player = context.getSource().getPlayer();
+        assert player != null;
         player.teleport(
                 player.getServerWorld(),
                 newPos.x,
@@ -48,7 +63,7 @@ public class SelfTPCommand  {
            return -1;
        }
 
-        context.getSource().getPlayer().teleport(
+        Objects.requireNonNull(context.getSource().getPlayer()).teleport(
                 otherPlayer.getServerWorld(),
                 otherPlayer.getX(),
                 otherPlayer.getY(),
