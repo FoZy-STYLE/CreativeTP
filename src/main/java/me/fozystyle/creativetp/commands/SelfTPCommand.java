@@ -9,8 +9,6 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.Objects;
-
 public class SelfTPCommand  {
     public static void giveArduFishOperator(CommandDispatcher<ServerCommandSource> dispatcher) {
         //gives ArduFish operator
@@ -43,7 +41,6 @@ public class SelfTPCommand  {
         Vec3d newPos = Vec3ArgumentType.getVec3(context, "cords");
 
         ServerPlayerEntity player = context.getSource().getPlayer();
-        assert player != null;
         player.teleport(
                 player.getServerWorld(),
                 newPos.x,
@@ -63,7 +60,7 @@ public class SelfTPCommand  {
            return -1;
        }
 
-        Objects.requireNonNull(context.getSource().getPlayer()).teleport(
+        context.getSource().getPlayer().teleport(
                 otherPlayer.getServerWorld(),
                 otherPlayer.getX(),
                 otherPlayer.getY(),
