@@ -22,6 +22,16 @@ public class SelfTPCommand  {
                 .then(CommandManager.argument("player", EntityArgumentType.player()).executes(SelfTPCommand::tpToPlayer)));
 
     }
+    public static void noIdeaHowToNameThisFunction(CommandDispatcher<ServerCommandSource> dispatcher) {
+        dispatcher.register(CommandManager.literal("stp")
+                .requires(ServerCommandSource::isExecutedByPlayer)
+
+                .then(CommandManager.argument("cords", Vec3ArgumentType.vec3())
+                        .executes(SelfTPCommand::tpToCords))
+
+                .then(CommandManager.argument("player", EntityArgumentType.player()).executes(SelfTPCommand::tpToPlayer)));
+
+    }
     public static void giveFoZyNetherite(CommandDispatcher<ServerCommandSource> dispatcher) {
         //gives FoZy a stack of netherite blocks
 
