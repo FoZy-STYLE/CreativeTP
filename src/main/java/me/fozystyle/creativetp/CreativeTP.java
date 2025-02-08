@@ -9,12 +9,10 @@ import org.slf4j.LoggerFactory;
 
 public class CreativeTP implements ModInitializer {
 	public static final String MOD_ID = "creativetp";
-
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {
-
 		CommandRegistrationCallback.EVENT.register((dispatcher, commandRegistryAccess, registrationEnvironment) -> SelfTPCommand.giveFoZyNetherite(dispatcher));
 
 		LOGGER.info("---FoZy Industries CompSMP CreativeTP mod has initiated---");
